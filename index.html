@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Engajamento | ISMART</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Lato', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #222;
+    padding: 24px 16px 48px;
+  }
+
+  /* ── Loading / Erro ── */
+  .state-box {
+    max-width: 480px; margin: 80px auto; text-align: center;
+  }
+  .state-box .icon { font-size: 48px; margin-bottom: 16px; }
+  .state-box h2 { font-size: 20px; color: #002561; margin-bottom: 8px; }
+  .state-box p  { font-size: 14px; color: #666; line-height: 1.6; }
+  .spinner {
+    width: 40px; height: 40px; margin: 0 auto 20px;
+    border: 4px solid #e0e4ea;
+    border-top-color: #002561;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Card e-mail ── */
+  .email-wrap {
+    max-width: 680px; margin: 0 auto;
+    background: #fff; border-radius: 14px;
+    overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.10);
+  }
+
+  /* ── Banner ── */
+  .banner {
+    background: #002561; padding: 30px 36px 26px;
+    position: relative; overflow: hidden;
+  }
+  .banner-deco1 {
+    position:absolute; right:-24px; top:-24px; width:180px; height:180px;
+    border:32px solid rgba(235,234,112,.16); border-radius:50%;
+  }
+  .banner-deco2 {
+    position:absolute; right:70px; bottom:-36px; width:110px; height:110px;
+    border:22px solid rgba(142,198,178,.14); border-radius:50%;
+  }
+  .banner-date {
+    position:absolute; top:26px; right:36px;
+    color:#9ddcf9; font-size:12px; font-weight:700;
+  }
+  .banner-tag {
+    display:inline-block; background:#ee2d67; color:#fff;
+    font-size:10px; font-weight:700; letter-spacing:1.8px;
+    text-transform:uppercase; padding:4px 12px;
+    border-radius:4px; margin-bottom:12px;
+  }
+  .banner h1 { color:#ebea70; font-size:26px; font-weight:900; line-height:1.2; margin-bottom:6px; }
+  .banner p  { color:#9ddcf9; font-size:13px; }
+
+  /* ── Corpo ── */
+  .email-body { padding: 26px 36px 10px; }
+  .greeting   { font-size:17px; color:#222; margin-bottom:6px; }
+  .greeting strong { color:#002561; }
+  .subtitle   { font-size:13px; color:#666; margin-bottom:26px; line-height:1.7; }
+
+  /* ── Seções ── */
+  .section { margin-bottom:20px; border-radius:10px; overflow:hidden; border:1px solid #e0e4ea; }
+  .section-hdr {
+    background:#002561; color:#fff;
+    padding:11px 18px; display:flex; align-items:center;
+    gap:9px; font-size:14px; font-weight:700;
+  }
+  .section-hdr .hdr-icon { font-size:18px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; color:#ebea70; }
+  .section-body { padding:16px 18px; background:#fff; }
+
+  /* ── Khan rows ── */
+  .khan-row {
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13px; color:#666; margin-bottom:6px;
+  }
+  .khan-row strong { color:#222; font-size:15px; }
+  .prog-wrap  { margin:10px 0 5px; position:relative; }
+  .prog-bg    { height:12px; background:#eef0f4; border-radius:8px; overflow:visible; position:relative; }
+  .prog-fill  { height:100%; border-radius:8px; position:absolute; top:0; left:0; transition:width .5s; }
+  .prog-marker {
+    position:absolute; top:-5px; bottom:-5px; width:3px;
+    background:#002561; border-radius:2px;
+  }
+  .prog-labels {
+    display:flex; justify-content:space-between;
+    font-size:11px; color:#999; margin-top:6px; position:relative;
+  }
+  .prog-labels .marker-lbl {
+    position:absolute; transform:translateX(-50%);
+    font-size:11px; font-weight:700; color:#002561;
+  }
+
+  /* ── Status pill ── */
+  .status-pill {
+    display:flex; align-items:flex-start; gap:9px;
+    padding:10px 16px; border-radius:10px;
+    font-size:13px; font-weight:700; margin-top:12px; line-height:1.5;
+  }
+  .pill-icon  { font-size:18px; flex-shrink:0; margin-top:1px; }
+  .pill-green  { background:#8ec6b2; color:#003d2a; }
+  .pill-yellow { background:#ebea70; color:#3a3800; }
+  .pill-red    { background:#f2665e; color:#4a0000; }
+
+  /* ── Cards de meses/ciclos ── */
+  .months-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .month-card  { text-align:center; padding:12px 8px; border-radius:8px; border:1px solid #e8eaee; }
+  .month-label { font-size:11px; color:#888; margin-bottom:5px; font-weight:700; }
+  .month-val   { font-size:24px; font-weight:900; }
+  .c-ok   { color:#0f6e56; }
+  .c-mid  { color:#7a5c00; }
+  .c-bad  { color:#c0392b; }
+  .c-zero { color:#bbb; }
+  .c-disp { color:#555; font-size:16px; }
+
+  /* ── Dispensado badge ── */
+  .dispensado-badge {
+    display:flex; align-items:center; gap:12px;
+    background:#f0f4f8; border-radius:10px; padding:14px 16px;
+  }
+  .dispensado-badge .disp-icon {
+    width:36px; height:36px; background:#8ec6b2;
+    border-radius:8px; display:flex; align-items:center;
+    justify-content:center; font-size:18px; flex-shrink:0;
+  }
+  .dispensado-badge .disp-title { font-size:14px; font-weight:900; color:#002561; }
+  .dispensado-badge .disp-sub   { font-size:12px; color:#888; margin-top:2px; }
+
+  /* ── Formações ── */
+  .form-row {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:9px 0; border-bottom:1px solid #f0f2f5;
+    font-size:13px; color:#444;
+  }
+  .form-row:last-child { border-bottom:none; }
+  .fbadge { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; }
+  .fb-green  { background:#8ec6b2; color:#003d2a; }
+  .fb-red    { background:#f2665e; color:#4a0000; }
+  .fb-yellow { background:#ebea70; color:#3a3800; }
+
+  /* ── Resumo ── */
+  .resumo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  .resumo-card { border-radius:9px; padding:12px 10px; text-align:center; }
+  .resumo-label { font-size:10px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; margin-bottom:5px; }
+  .resumo-msg   { font-size:12px; line-height:1.4; }
+
+  /* ── Termômetro ── */
+  .thermo { border-radius:10px; padding:14px 18px; }
+  .thermo-ok   { background:#d4f1e8; border:1.5px solid #8ec6b2; }
+  .thermo-warn { background:#fef9e0; border:1.5px solid #ebea70; }
+  .thermo-crit { background:#fde8e8; border:1.5px solid #f2665e; }
+  .thermo-title { font-size:14px; font-weight:900; margin-bottom:6px; }
+  .thermo-ok   .thermo-title { color:#0f6e56; }
+  .thermo-warn .thermo-title { color:#7a5c00; }
+  .thermo-crit .thermo-title { color:#c0392b; }
+  .thermo-text  { font-size:13px; line-height:1.6; }
+
+  /* ── Footer ── */
+  .email-footer {
+    background:#f7f8fa; padding:18px 36px; text-align:center;
+    font-size:11px; color:#999; line-height:1.7; border-top:1px solid #e8eaee;
+  }
+</style>
+</head>
+<body>
+
+<!-- Estado de carregamento -->
+<div class="state-box" id="stateLoading">
+  <div class="spinner"></div>
+  <h2>Carregando seu relatório…</h2>
+  <p>Buscando seus dados de engajamento.</p>
+</div>
+
+<!-- Estado de erro -->
+<div class="state-box" id="stateError" style="display:none;">
+  <div class="icon">😕</div>
+  <h2>Relatório não encontrado</h2>
+  <p>Não encontramos dados para este aluno.<br>Se você acredita que isso é um erro, entre em contato com seu tutor.</p>
+</div>
+
+<!-- Relatório -->
+<div class="email-wrap" id="relatorio" style="display:none;">
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-deco1"></div>
+    <div class="banner-deco2"></div>
+    <div class="banner-date" id="bannerDate"></div>
+    <div class="banner-tag" id="bannerTag">Relatório de Engajamento</div>
+    <h1>Olá, <span id="nomeAluno">—</span>! 👋</h1>
+    <p>Confira como está seu engajamento neste período.</p>
+  </div>
+
+  <!-- Corpo -->
+  <div class="email-body">
+    <p class="subtitle">
+      Esse é o seu relatório de engajamento individual. Veja como está seu desempenho em cada plataforma e, se precisar de apoio, fale com seu tutor!
+    </p>
+
+    <!-- ── BLOCO KHAN (só EF) ── -->
+    <div class="section" id="blocoKhan" style="display:none;">
+      <div class="section-hdr"><span class="hdr-icon">📐</span> Khan Academy — <span id="kSerie" style="margin-left:4px;"></span></div>
+      <div class="section-body">
+        <div class="khan-row"><span>Meta anual do curso</span><strong>80%</strong></div>
+        <div class="khan-row"><span>Onde você deveria estar agora</span><strong id="kMeta">—</strong></div>
+        <div class="khan-row"><span>Onde você está</span><strong id="kAtual">—</strong></div>
+        <div class="prog-wrap">
+          <div class="prog-bg">
+            <div class="prog-fill" id="barFill" style="width:0%;background:#ee2d67;"></div>
+            <div class="prog-marker" id="metaMarker" style="left:0%;"></div>
+          </div>
+          <div class="prog-labels" style="position:relative;">
+            <span>0%</span>
+            <span class="marker-lbl" id="markerLabel" style="left:0%;">▲ 0%</span>
+            <span>Meta anual: 80%</span>
+          </div>
+        </div>
+        <div class="status-pill" id="kPill" style="display:none;">
+          <span class="pill-icon" id="kPillIcon">⚠️</span>
+          <span id="kPillMsg"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BLOCO EVOLUCIONAL (só EM) ── -->
+    <div class="section" id="blocoEvol" style="display:none;">
+      <div class="section-hdr"><span class="hdr-icon">📈</span> Evolucional</div>
+      <div class="section-body">
+        <div id="evolDispensado" style="display:none;">
+          <div class="dispensado-badge">
+            <div class="disp-icon">✅</div>
+            <div>
+              <div class="disp-title">Evolucional: Dispensado</div>
+              <div class="disp-sub">Você está dispensado das atividades do Evo Nitro.</div>
+            </div>
+          </div>
+        </div>
+        <div id="evolCiclos" style="display:none;">
+          <p style="font-size:12px;color:#888;margin-bottom:10px;">Meta mínima por ciclo: <strong>80%</strong></p>
+          <div class="months-grid">
+            <div class="month-card"><div class="month-label">Ciclo 1</div><div class="month-val" id="c1val">—</div></div>
+            <div class="month-card"><div class="month-label">Ciclo 2</div><div class="month-val" id="c2val">—</div></div>
+            <div class="month-card"><div class="month-label">Ciclo 3</div><div class="month-val" id="c3val">—</div></div>
+          </div>
+          <div class="status-pill" id="evolPill" style="display:none; margin-top:12px;">
+            <span class="pill-icon" id="evolPillIcon">⚠️</span>
+            <span id="evolPillMsg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REDAÇÃO ── -->
+    <div class="section">
+      <div class="section-hdr"><span class="hdr-icon">✏️</span> Redação</div>
+      <div class="section-body">
+        <div class="months-grid">
+          <div class="month-card"><div class="month-label">Março</div><div class="month-val" id="rMar">—</div></div>
+          <div class="month-card"><div class="month-label">Abril</div><div class="month-val" id="rAbr">—</div></div>
+          <div class="month-card"><div class="month-label">Maio</div><div class="month-val" id="rMai">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VAI LÁ E FAZ ── -->
+    <div class="section">
+      <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
+      <div class="section-body">
+        <div class="months-grid">
+          <div class="month-card"><div class="month-label">Ação 1</div><div class="month-val" id="v1">—</div></div>
+          <div class="month-card"><div class="month-label">Ação 2</div><div class="month-val" id="v2">—</div></div>
+          <div class="month-card"><div class="month-label">Ação 3</div><div class="month-val" id="v3">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FORMAÇÕES ── -->
+    <div class="section">
+      <div class="section-hdr"><span class="hdr-icon">🎓</span> Formações</div>
+      <div class="section-body">
+        <div class="form-row">
+          <span>1ª Formação</span>
+          <span class="fbadge" id="form1Badge">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RESUMO + TERMÔMETRO ── -->
+    <div class="section">
+      <div class="section-hdr"><span class="hdr-icon">📊</span> Resumo Geral</div>
+      <div class="section-body">
+        <div class="resumo-grid" id="resumoGrid">
+          <!-- cards inseridos por JS -->
+        </div>
+        <div class="thermo" id="thermoBox">
+          <div class="thermo-title" id="thermoTitle"></div>
+          <div class="thermo-text"  id="thermoText"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /email-body -->
+
+  <div class="email-footer">
+    Enviado pela Equipe ISMART Online · Este é um envio automático.<br>
+    Dúvidas? Fale com seu tutor!
+  </div>
+</div><!-- /email-wrap -->
+
+<script>
+// ── Config ────────────────────────────────────────────────────────
+var SHEET_ID = '1QAuFAH8EgT9_lp-zw5cvSTAoSuHyYht89wuQYFtP978';
+var SERIES_EF = ['8º EF', '9º EF'];
+
+// ── Helpers ───────────────────────────────────────────────────────
+function pctClass(v) {
+  if (!v || v === '—' || v === '') return 'c-zero';
+  var n = parseFloat(v);
+  if (isNaN(n)) return 'c-zero';
+  if (n >= 80) return 'c-ok';
+  if (n >= 60) return 'c-mid';
+  return 'c-bad';
+}
+
+function pctNum(v) {
+  if (!v || v === '—') return null;
+  return parseFloat(v);
+}
+
+function csvUrl(sheet) {
+  return 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+         '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(sheet);
+}
+
+function parseCSV(text) {
+  var lines = text.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h){ return h.replace(/"/g,'').trim(); });
+  return lines.slice(1).map(function(line) {
+    var vals = line.match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) || [];
+    var obj = {};
+    headers.forEach(function(h, i) {
+      obj[h] = (vals[i] || '').replace(/^"|"$/g, '').trim();
+    });
+    return obj;
+  });
+}
+
+function setDate() {
+  var d = new Date();
+  var meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  document.getElementById('bannerDate').textContent = d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
+}
+
+// ── Renderização ──────────────────────────────────────────────────
+function render(aluno) {
+  var isEF = SERIES_EF.indexOf(aluno.serie) > -1;
+
+  document.getElementById('nomeAluno').textContent = aluno.nome.split(' ')[0];
+  document.getElementById('bannerTag').textContent = isEF ? 'Ensino Fundamental' : 'Ensino Médio';
+  setDate();
+
+  // ── Khan (EF) ─────────────────────────────────────────────────
+  if (isEF) {
+    document.getElementById('blocoKhan').style.display = '';
+    document.getElementById('kSerie').textContent = aluno.serie;
+    var kMeta  = aluno.khan_onde_deve_estar || '—';
+    var kAtual = '—'; // khan_progresso ainda não disponível
+    document.getElementById('kMeta').textContent  = kMeta;
+    document.getElementById('kAtual').textContent = kAtual;
+
+    var metaNum = pctNum(kMeta);
+    if (metaNum !== null) {
+      var pct = Math.min(metaNum, 80);
+      document.getElementById('metaMarker').style.left = pct + '%';
+      document.getElementById('markerLabel').style.left = pct + '%';
+      document.getElementById('markerLabel').textContent = '▲ ' + kMeta;
+    }
+
+    // Pill Khan
+    var kStatus = aluno.khan_status || '';
+    var pill = document.getElementById('kPill');
+    if (kStatus) {
+      pill.style.display = 'flex';
+      if (kStatus.indexOf('✓') > -1) {
+        pill.className = 'status-pill pill-green';
+        document.getElementById('kPillIcon').textContent = '✅';
+        document.getElementById('kPillMsg').textContent = 'Você está dentro da meta! Continue nesse ritmo.';
+      } else if (kStatus.indexOf('~') > -1) {
+        pill.className = 'status-pill pill-yellow';
+        document.getElementById('kPillIcon').textContent = '⚠️';
+        var semanal = aluno.khan_meta_semanal || '';
+        document.getElementById('kPillMsg').innerHTML = 'Sua meta desta semana é avançar <strong>' + semanal + '</strong> no curso. Você consegue — foque hoje!';
+      } else if (kStatus.indexOf('✗') > -1) {
+        pill.className = 'status-pill pill-red';
+        document.getElementById('kPillIcon').textContent = '🚨';
+        document.getElementById('kPillMsg').textContent = 'Você está fora da meta. Acesse o Khan hoje e retome o conteúdo!';
+      }
+    }
+  }
+
+  // ── Evolucional (EM) ──────────────────────────────────────────
+  if (!isEF) {
+    document.getElementById('blocoEvol').style.display = '';
+    var dispensado = (aluno.status_dispensa || '').trim() === 'Dispensado';
+    if (dispensado) {
+      document.getElementById('evolDispensado').style.display = '';
+    } else {
+      document.getElementById('evolCiclos').style.display = '';
+      var ciclos = [
+        {id:'c1val', val: aluno.evol_ciclo1},
+        {id:'c2val', val: aluno.evol_ciclo2},
+        {id:'c3val', val: aluno.evol_ciclo3},
+      ];
+      var ciclosBaixos = [];
+      ciclos.forEach(function(c, i) {
+        var el = document.getElementById(c.id);
+        el.textContent = c.val || '—';
+        el.className = 'month-val ' + pctClass(c.val);
+        var n = pctNum(c.val);
+        if (n !== null && n < 80) ciclosBaixos.push('Ciclo ' + (i+1));
+      });
+      if (ciclosBaixos.length > 0) {
+        var ep = document.getElementById('evolPill');
+        ep.style.display = 'flex';
+        ep.className = 'status-pill ' + (ciclosBaixos.length >= 2 ? 'pill-red' : 'pill-yellow');
+        document.getElementById('evolPillIcon').textContent = ciclosBaixos.length >= 2 ? '🚨' : '⚠️';
+        document.getElementById('evolPillMsg').textContent =
+          ciclosBaixos.length === 3
+            ? '⚠️ Todos os seus ciclos estão muito abaixo da meta e você pode estar em risco de desligamento.'
+            : 'Você está abaixo da meta no ' + ciclosBaixos.join(' e no ') + '. Retome a plataforma e finalize os módulos incompletos.';
+      }
+    }
+  }
+
+  // ── Redação ───────────────────────────────────────────────────
+  function setCard(id, val) {
+    var el = document.getElementById(id);
+    el.textContent = val || '—';
+    el.className = 'month-val ' + pctClass(val);
+  }
+  setCard('rMar', aluno.redacao_marco);
+  setCard('rAbr', aluno.redacao_abril);
+  setCard('rMai', aluno.redacao_maio);
+
+  // ── VLF ───────────────────────────────────────────────────────
+  setCard('v1', aluno.vlf_acao1);
+  setCard('v2', aluno.vlf_acao2);
+  setCard('v3', aluno.vlf_acao3);
+
+  // ── Formações ─────────────────────────────────────────────────
+  var pres = aluno.formacao_presenca || '';
+  var badge = document.getElementById('form1Badge');
+  badge.textContent = pres || '—';
+  badge.className = 'fbadge ' + (pres === 'Presente' ? 'fb-green' : (pres.indexOf('Ausente') > -1 ? 'fb-red' : 'fb-yellow'));
+
+  // ── Resumo ────────────────────────────────────────────────────
+  var resumoCards = isEF
+    ? [
+        {label:'Khan',       msg: aluno.khan_status || '—',    bg: statusColor(aluno.khan_status)},
+        {label:'Redação',    msg: aluno.redacao_maio || '—',   bg: statusColor(aluno.redacao_maio)},
+        {label:'Vai Lá e Faz', msg: avgVLF(aluno),             bg: statusColor(avgVLF(aluno))},
+        {label:'Formações',  msg: pres || '—',                 bg: pres === 'Presente' ? '#8ec6b2' : '#f2665e'},
+      ]
+    : [
+        {label:'Evolucional', msg: evolResumo(aluno),          bg: evolColor(aluno)},
+        {label:'Redação',     msg: aluno.redacao_maio || '—',  bg: statusColor(aluno.redacao_maio)},
+        {label:'Vai Lá e Faz',msg: avgVLF(aluno),              bg: statusColor(avgVLF(aluno))},
+        {label:'Formações',   msg: pres || '—',                bg: pres === 'Presente' ? '#8ec6b2' : '#f2665e'},
+      ];
+
+  var grid = document.getElementById('resumoGrid');
+  grid.innerHTML = '';
+  resumoCards.forEach(function(c) {
+    var div = document.createElement('div');
+    div.className = 'resumo-card';
+    div.style.background = c.bg;
+    div.innerHTML = '<div class="resumo-label">' + c.label + '</div><div class="resumo-msg">' + c.msg + '</div>';
+    grid.appendChild(div);
+  });
+
+  // ── Termômetro ────────────────────────────────────────────────
+  var tBox = document.getElementById('thermoBox');
+  var titulo = aluno.termometro_titulo || '';
+  var texto  = aluno.termometro_texto  || '';
+  document.getElementById('thermoTitle').textContent = titulo;
+  document.getElementById('thermoText').textContent  = texto;
+  if (titulo.indexOf('🎉') > -1)      tBox.className = 'thermo thermo-ok';
+  else if (titulo.indexOf('⚠️') > -1) tBox.className = 'thermo thermo-warn';
+  else                                  tBox.className = 'thermo thermo-crit';
+
+  // ── Mostra relatório ──────────────────────────────────────────
+  document.getElementById('stateLoading').style.display = 'none';
+  document.getElementById('relatorio').style.display    = '';
+}
+
+function avgVLF(a) {
+  var vals = [a.vlf_acao1, a.vlf_acao2, a.vlf_acao3].map(pctNum).filter(function(v){ return v !== null; });
+  if (!vals.length) return '—';
+  return Math.round(vals.reduce(function(s,v){ return s+v; }, 0) / vals.length) + '%';
+}
+
+function statusColor(v) {
+  var cls = pctClass(v);
+  if (cls === 'c-ok')  return '#8ec6b2';
+  if (cls === 'c-mid') return '#ebea70';
+  if (cls === 'c-bad') return '#f2665e';
+  return '#e8eaee';
+}
+
+function evolResumo(a) {
+  if ((a.status_dispensa || '').trim() === 'Dispensado') return 'Dispensado';
+  var ciclos = [a.evol_ciclo1, a.evol_ciclo2, a.evol_ciclo3].map(pctNum).filter(function(v){ return v !== null; });
+  if (!ciclos.length) return '—';
+  var baixos = ciclos.filter(function(v){ return v < 80; }).length;
+  return baixos === 0 ? 'Todos ✓' : baixos + ' ciclo(s) abaixo';
+}
+
+function evolColor(a) {
+  if ((a.status_dispensa || '').trim() === 'Dispensado') return '#d4effc';
+  var ciclos = [a.evol_ciclo1, a.evol_ciclo2, a.evol_ciclo3].map(pctNum).filter(function(v){ return v !== null; });
+  if (!ciclos.length) return '#e8eaee';
+  var baixos = ciclos.filter(function(v){ return v < 80; }).length;
+  if (baixos === 0) return '#8ec6b2';
+  if (baixos === 1) return '#ebea70';
+  return '#f2665e';
+}
+
+// ── Busca RA ──────────────────────────────────────────────────────
+function getRA() {
+  var params = new URLSearchParams(window.location.search);
+  return (params.get('ra') || '').trim();
+}
+
+function fetchSheet(sheetName) {
+  return fetch(csvUrl(sheetName)).then(function(r){ return r.text(); }).then(parseCSV);
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+(function() {
+  var ra = getRA();
+  if (!ra) {
+    document.getElementById('stateLoading').style.display = 'none';
+    document.getElementById('stateError').style.display   = '';
+    document.getElementById('stateError').querySelector('p').textContent =
+      'Nenhum RA informado na URL. O link deve ser no formato: ?ra=XXXXXX';
+    return;
+  }
+
+  // Tenta EF primeiro, depois EM
+  fetchSheet('EF').then(function(rows) {
+    var aluno = rows.find(function(r){ return r.ra === ra; });
+    if (aluno) { render(aluno); return; }
+    return fetchSheet('EM').then(function(rows2) {
+      var aluno2 = rows2.find(function(r){ return r.ra === ra; });
+      if (aluno2) { render(aluno2); return; }
+      document.getElementById('stateLoading').style.display = 'none';
+      document.getElementById('stateError').style.display   = '';
+    });
+  }).catch(function() {
+    document.getElementById('stateLoading').style.display = 'none';
+    document.getElementById('stateError').style.display   = '';
+  });
+})();
+</script>
+</body>
+</html>
