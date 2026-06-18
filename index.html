@@ -350,7 +350,7 @@
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
       <div class="section-body">
-        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual das ações entregues.</p>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de ações entregues.</p>
         <div id="vlfGrid" class="months-grid"></div>
       </div>
     </div>
@@ -676,7 +676,7 @@ function render(aluno) {
     return aluno[v.key] !== undefined && aluno[v.key] !== '';
   });
   if (!vlfDisponiveis.length) {
-    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma missão registrada ainda.</p>';
+    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma ação registrada ainda.</p>';
   } else {
     vlfGrid.className = vlfDisponiveis.length <= 3 ? 'months-grid'
                       : vlfDisponiveis.length <= 4 ? 'months-grid-4'
@@ -741,9 +741,22 @@ function render(aluno) {
 
   var vlfAvg = avgVLF();
   var pres = aluno.formacao_1a || '';
+  // Cor do Khan baseada em progresso vs meta atual (não threshold fixo)
+  function khanBg() {
+    var prog = pctNum(aluno.khan_progresso);
+    var meta = pctNum(aluno.khan_onde_deve_estar);
+    if (prog === null) return '#f0f2f5';
+    if (meta !== null) {
+      if (prog >= meta) return '#d4f1e8';
+      if (prog >= meta * 0.5) return '#fef9e0';
+      return '#fde8e8';
+    }
+    return statusColor(aluno.khan_progresso);
+  }
+
   var resumoCards = isEF
     ? [
-        {label:'Khan',       msg: aluno.khan_progresso || '—', bg: statusColor(aluno.khan_progresso)},
+        {label:'Khan',       msg: aluno.khan_progresso || '—', bg: khanBg()},
         {label:'Redação',    msg: (aluno.redacao_missed || '0') + ' falta(s)', bg: parseInt(aluno.redacao_missed||'0')===0?'#d4f1e8':parseInt(aluno.redacao_missed||'0')===1?'#fef9e0':'#fde8e8'},
         {label:'Vai Lá e Faz', msg: vlfAvg,                    bg: statusColor(vlfAvg)},
         {label:'Formações',  msg: pres || '—',                 bg: pres === 'Presente' ? '#d4f1e8' : pres?'#fde8e8':'#f0f2f5'},
