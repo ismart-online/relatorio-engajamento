@@ -363,6 +363,10 @@
           <span>1ª Formação</span>
           <span class="fbadge" id="form1Badge">—</span>
         </div>
+        <div class="form-row" id="form2Row" style="display:none">
+          <span>2ª Formação</span>
+          <span class="fbadge" id="form2Badge">—</span>
+        </div>
       </div>
     </div>
 
@@ -683,15 +687,24 @@ function render(aluno) {
   }
 
   // ── Formações ─────────────────────────────────────────────────
-  var pres  = aluno.formacao_presenca || '';
-  var badge = document.getElementById('form1Badge');
-  badge.textContent  = pres || '—';
-  badge.className    = 'fbadge ' + (pres === 'Presente' ? 'fb-green'
-                                  : pres.indexOf('Ausente') > -1 ? 'fb-red' : 'fb-yellow');
+  function setBadge(el, val) {
+    el.textContent = val || '—';
+    el.className   = 'fbadge ' + (val === 'Presente' ? 'fb-green'
+                                : (val || '').indexOf('Ausente') > -1 ? 'fb-red' : 'fb-yellow');
+  }
+  setBadge(document.getElementById('form1Badge'), aluno.formacao_1a || '');
+  var f2val = aluno.formacao_2a || '';
+  if (f2val) {
+    var row2 = document.getElementById('form2Row');
+    if (row2) row2.style.display = '';
+    setBadge(document.getElementById('form2Badge'), f2val);
+  }
 
   // ── Prova Única ───────────────────────────────────────────────
   var puBody = document.getElementById('puBody');
-  var puNota = String(aluno.pu_nota || '').trim();
+  var puNota = aluno.pu_nota != null && aluno.pu_nota !== ''
+    ? String(Math.round(Number(aluno.pu_nota)))
+    : '';
   if (puNota) {
     puBody.innerHTML =
       '<div class="pu-box">' +
