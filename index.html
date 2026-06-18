@@ -297,7 +297,7 @@
             <div class="disp-icon">✅</div>
             <div>
               <div class="disp-title">Evolucional: Dispensado</div>
-              <div class="disp-sub">Você está dispensado das atividades do Evo Nitro — continue focado nas demais atividades!</div>
+              <div class="disp-sub">Você está dispensado das atividades do Evo Nitro — continue focado nas demais frentes!</div>
             </div>
           </div>
         </div>
@@ -350,7 +350,7 @@
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
       <div class="section-body">
-        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de ações entregues.</p>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de missões entregues em cada semana avaliada.</p>
         <div id="vlfGrid" class="months-grid"></div>
       </div>
     </div>
@@ -676,7 +676,7 @@ function render(aluno) {
     return aluno[v.key] !== undefined && aluno[v.key] !== '';
   });
   if (!vlfDisponiveis.length) {
-    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma ação registrada ainda.</p>';
+    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma missão registrada ainda.</p>';
   } else {
     vlfGrid.className = vlfDisponiveis.length <= 3 ? 'months-grid'
                       : vlfDisponiveis.length <= 4 ? 'months-grid-4'
@@ -784,9 +784,12 @@ function render(aluno) {
   var texto  = aluno.termometro_texto  || '';
   document.getElementById('thermoTitle').textContent = titulo;
   document.getElementById('thermoText').textContent  = texto;
-  if (titulo.indexOf('🎉') > -1)      tBox.className = 'thermo thermo-ok';
-  else if (titulo.indexOf('⚠️') > -1) tBox.className = 'thermo thermo-warn';
-  else                                  tBox.className = 'thermo thermo-crit';
+  if (titulo.indexOf('Excelente') > -1 || titulo.indexOf('🎉') > -1)
+    tBox.className = 'thermo thermo-ok';
+  else if (titulo.indexOf('Atenção') > -1 || titulo.indexOf('⚠️') > -1)
+    tBox.className = 'thermo thermo-warn';
+  else
+    tBox.className = 'thermo thermo-crit';
 
   // ── Mostra relatório ──────────────────────────────────────────
   document.getElementById('stateLoading').style.display = 'none';
