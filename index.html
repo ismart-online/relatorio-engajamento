@@ -740,6 +740,7 @@ function render(aluno) {
   }
 
   var vlfAvg = avgVLF();
+  var pres = aluno.formacao_1a || '';
   var resumoCards = isEF
     ? [
         {label:'Khan',       msg: aluno.khan_progresso || '—', bg: statusColor(aluno.khan_progresso)},
