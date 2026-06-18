@@ -31,7 +31,7 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── Card e-mail ── */
+  /* ── Card principal ── */
   .email-wrap {
     max-width: 680px; margin: 0 auto;
     background: #fff; border-radius: 14px;
@@ -80,44 +80,57 @@
   .section-hdr .hdr-icon { font-size:18px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; color:#ebea70; }
   .section-body { padding:16px 18px; background:#fff; }
 
-  /* ── Khan rows ── */
+  /* ── Khan ── */
   .khan-row {
     display:flex; justify-content:space-between; align-items:center;
     font-size:13px; color:#666; margin-bottom:6px;
   }
   .khan-row strong { color:#222; font-size:15px; }
-  .prog-wrap  { margin:10px 0 5px; position:relative; }
-  .prog-bg    { height:12px; background:#eef0f4; border-radius:8px; overflow:visible; position:relative; }
+  .prog-wrap  { margin:12px 0 6px; }
+  .prog-bg    { height:14px; background:#eef0f4; border-radius:8px; overflow:visible; position:relative; }
   .prog-fill  { height:100%; border-radius:8px; position:absolute; top:0; left:0; transition:width .5s; }
   .prog-marker {
-    position:absolute; top:-5px; bottom:-5px; width:3px;
+    position:absolute; top:-6px; bottom:-6px; width:3px;
     background:#002561; border-radius:2px;
   }
   .prog-labels {
     display:flex; justify-content:space-between;
-    font-size:11px; color:#999; margin-top:6px; position:relative;
+    font-size:11px; color:#999; margin-top:8px; position:relative;
   }
   .prog-labels .marker-lbl {
     position:absolute; transform:translateX(-50%);
     font-size:11px; font-weight:700; color:#002561;
+  }
+  /* milestones */
+  .milestone-dot {
+    position:absolute; top:50%; transform:translate(-50%,-50%);
+    width:10px; height:10px; border-radius:50%;
+    border:2px solid #fff; background:#002561; z-index:2;
+  }
+  .milestone-dot.passed { background:#8ec6b2; }
+  .milestone-lbl {
+    position:absolute; bottom:-22px; transform:translateX(-50%);
+    font-size:10px; color:#888; white-space:nowrap;
   }
 
   /* ── Status pill ── */
   .status-pill {
     display:flex; align-items:flex-start; gap:9px;
     padding:10px 16px; border-radius:10px;
-    font-size:13px; font-weight:700; margin-top:12px; line-height:1.5;
+    font-size:13px; line-height:1.5; margin-top:12px;
   }
   .pill-icon  { font-size:18px; flex-shrink:0; margin-top:1px; }
-  .pill-green  { background:#8ec6b2; color:#003d2a; }
-  .pill-yellow { background:#ebea70; color:#3a3800; }
-  .pill-red    { background:#f2665e; color:#4a0000; }
+  .pill-green  { background:#d4f1e8; color:#003d2a; }
+  .pill-yellow { background:#fef9e0; color:#3a3800; }
+  .pill-red    { background:#fde8e8; color:#4a0000; }
 
-  /* ── Cards de meses/ciclos ── */
+  /* ── Cards de meses/missões ── */
   .months-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .months-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .months-grid-5 { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
   .month-card  { text-align:center; padding:12px 8px; border-radius:8px; border:1px solid #e8eaee; }
   .month-label { font-size:11px; color:#888; margin-bottom:5px; font-weight:700; }
-  .month-val   { font-size:24px; font-weight:900; }
+  .month-val   { font-size:22px; font-weight:900; }
   .c-ok   { color:#8ec6b2; }
   .c-mid  { color:#7a5c00; }
   .c-bad  { color:#f2665e; }
@@ -137,6 +150,22 @@
   .dispensado-badge .disp-title { font-size:14px; font-weight:900; color:#002561; }
   .dispensado-badge .disp-sub   { font-size:12px; color:#888; margin-top:2px; }
 
+  /* ── Ciclo atual (EM) ── */
+  .ciclo-atual-box {
+    display:flex; align-items:center; gap:16px;
+    background:#f4f7fb; border-radius:10px; padding:14px 16px; margin-bottom:14px;
+  }
+  .ciclo-atual-num {
+    width:52px; height:52px; background:#002561; color:#ebea70;
+    border-radius:10px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .ciclo-atual-num .cn-label { font-size:9px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; }
+  .ciclo-atual-num .cn-val   { font-size:20px; font-weight:900; line-height:1; }
+  .ciclo-atual-info .ci-title { font-size:14px; font-weight:900; color:#002561; }
+  .ciclo-atual-info .ci-media { font-size:13px; color:#666; margin-top:3px; }
+  .ciclo-atual-info .ci-media strong { color:#222; }
+
   /* ── Formações ── */
   .form-row {
     display:flex; justify-content:space-between; align-items:center;
@@ -148,6 +177,24 @@
   .fb-green  { background:#8ec6b2; color:#003d2a; }
   .fb-red    { background:#f2665e; color:#4a0000; }
   .fb-yellow { background:#ebea70; color:#3a3800; }
+
+  /* ── Prova Única ── */
+  .pu-box {
+    display:flex; align-items:center; gap:16px;
+    padding:14px 16px; border-radius:10px; background:#f4f7fb;
+  }
+  .pu-nota-big {
+    font-size:36px; font-weight:900; color:#002561;
+    min-width:80px; text-align:center; flex-shrink:0;
+  }
+  .pu-info .pu-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:#888; margin-bottom:4px; }
+  .pu-info .pu-msg   { font-size:13px; color:#444; line-height:1.5; }
+  .pu-pending {
+    display:flex; align-items:center; gap:12px;
+    background:#fef9e0; border-radius:10px; padding:14px 16px;
+  }
+  .pu-pending .pu-pending-icon { font-size:24px; flex-shrink:0; }
+  .pu-pending .pu-pending-txt  { font-size:13px; color:#3a3800; line-height:1.5; }
 
   /* ── Resumo ── */
   .resumo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
@@ -200,6 +247,7 @@
     <div class="banner-tag" id="bannerTag">Relatório de Engajamento</div>
     <h1>Olá, <span id="nomeAluno">—</span>! 👋</h1>
     <p>Confira como está seu engajamento neste período.</p>
+    <p style="margin-top:8px;font-size:11px;color:rgba(157,220,249,0.7);">🔄 Dados atualizados quinzenalmente</p>
   </div>
 
   <!-- Corpo -->
@@ -212,22 +260,27 @@
     <div class="section" id="blocoKhan" style="display:none;">
       <div class="section-hdr"><span class="hdr-icon">📐</span> Khan Academy — <span id="kSerie" style="margin-left:4px;"></span></div>
       <div class="section-body">
-        <div class="khan-row"><span>Meta anual do curso</span><strong>80%</strong></div>
+        <div class="khan-row"><span>Meta anual — concluir até outubro</span><strong>80%</strong></div>
         <div class="khan-row"><span>Onde você deveria estar agora</span><strong id="kMeta">—</strong></div>
         <div class="khan-row"><span>Onde você está</span><strong id="kAtual">—</strong></div>
+
+        <!-- Barra de progresso com marcos -->
         <div class="prog-wrap">
-          <div class="prog-bg">
-            <div class="prog-fill" id="barFill" style="width:0%;background:#ee2d67;"></div>
+          <div class="prog-bg" id="kProgBg" style="height:14px;">
+            <div class="prog-fill" id="barFill" style="width:0%;background:#8ec6b2;"></div>
             <div class="prog-marker" id="metaMarker" style="left:0%;"></div>
+            <!-- marcos injetados por JS -->
           </div>
-          <div class="prog-labels" style="position:relative;">
+          <div class="prog-labels" style="position:relative; margin-top:38px;">
             <span>0%</span>
-            <span class="marker-lbl" id="markerLabel" style="left:0%;">▲ 0%</span>
+            <span class="marker-lbl" id="markerLabel" style="left:0%;">▲ meta atual</span>
             <span>Meta anual: 80%</span>
           </div>
         </div>
-        <div class="status-pill" id="kPill" style="display:none;">
-          <span class="pill-icon" id="kPillIcon">⚠️</span>
+
+        <!-- Mensagem orientada -->
+        <div class="status-pill" id="kMsgPill" style="display:none;">
+          <span class="pill-icon" id="kPillIcon">💡</span>
           <span id="kPillMsg"></span>
         </div>
       </div>
@@ -237,27 +290,44 @@
     <div class="section" id="blocoEvol" style="display:none;">
       <div class="section-hdr"><span class="hdr-icon">📈</span> Evolucional</div>
       <div class="section-body">
+
+        <!-- Dispensado -->
         <div id="evolDispensado" style="display:none;">
           <div class="dispensado-badge">
             <div class="disp-icon">✅</div>
             <div>
               <div class="disp-title">Evolucional: Dispensado</div>
-              <div class="disp-sub">Você está dispensado das atividades do Evo Nitro.</div>
+              <div class="disp-sub">Você está dispensado das atividades do Evo Nitro — continue focado nas demais frentes!</div>
             </div>
           </div>
         </div>
-        <div id="evolCiclos" style="display:none;">
+
+        <!-- Todos os ciclos + destaque no atual -->
+        <div id="evolAtivo" style="display:none;">
           <p style="font-size:12px;color:#888;margin-bottom:10px;">Meta mínima por ciclo: <strong>80%</strong></p>
-          <div class="months-grid">
-            <div class="month-card"><div class="month-label">Ciclo 1</div><div class="month-val" id="c1val">—</div></div>
-            <div class="month-card"><div class="month-label">Ciclo 2</div><div class="month-val" id="c2val">—</div></div>
-            <div class="month-card"><div class="month-label">Ciclo 3</div><div class="month-val" id="c3val">—</div></div>
+
+          <!-- Grid de todos os ciclos (injetado por JS) -->
+          <div id="evolCiclosGrid" class="months-grid" style="margin-bottom:14px;"></div>
+
+          <!-- Ciclo atual em destaque -->
+          <div class="ciclo-atual-box">
+            <div class="ciclo-atual-num">
+              <span class="cn-label">Ciclo</span>
+              <span class="cn-val" id="evolCicloNum">—</span>
+            </div>
+            <div class="ciclo-atual-info">
+              <div class="ci-title" id="evolCicloNome">— (ciclo atual)</div>
+              <div class="ci-media">Média: <strong id="evolMedia">—</strong></div>
+            </div>
           </div>
-          <div class="status-pill" id="evolPill" style="display:none; margin-top:12px;">
-            <span class="pill-icon" id="evolPillIcon">⚠️</span>
-            <span id="evolPillMsg"></span>
+
+          <!-- Mensagem de módulos -->
+          <div class="status-pill" id="evolModPill" style="display:none;">
+            <span class="pill-icon" id="evolModIcon">📋</span>
+            <span id="evolModMsg"></span>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -265,23 +335,23 @@
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">✏️</span> Redação</div>
       <div class="section-body">
-        <div class="months-grid">
-          <div class="month-card"><div class="month-label">Março</div><div class="month-val" id="rMar">—</div></div>
-          <div class="month-card"><div class="month-label">Abril</div><div class="month-val" id="rAbr">—</div></div>
-          <div class="month-card"><div class="month-label">Maio</div><div class="month-val" id="rMai">—</div></div>
+        <!-- Grid dinâmico de meses -->
+        <div id="redacaoGrid" class="months-grid"></div>
+
+        <!-- Mensagem -->
+        <div class="status-pill" id="redacaoPill" style="display:none; margin-top:14px;">
+          <span class="pill-icon" id="redacaoPillIcon">📝</span>
+          <span id="redacaoPillMsg"></span>
         </div>
       </div>
     </div>
 
-    <!-- ── VAI LÁ E FAZ ── -->
+    <!-- ── VAI LÁ E FAZ (Missões) ── -->
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
       <div class="section-body">
-        <div class="months-grid">
-          <div class="month-card"><div class="month-label">Ação 1</div><div class="month-val" id="v1">—</div></div>
-          <div class="month-card"><div class="month-label">Ação 2</div><div class="month-val" id="v2">—</div></div>
-          <div class="month-card"><div class="month-label">Ação 3</div><div class="month-val" id="v3">—</div></div>
-        </div>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de missões entregues em cada semana avaliada.</p>
+        <div id="vlfGrid" class="months-grid"></div>
       </div>
     </div>
 
@@ -296,13 +366,19 @@
       </div>
     </div>
 
+    <!-- ── PROVA ÚNICA ── -->
+    <div class="section" id="blocoPU">
+      <div class="section-hdr"><span class="hdr-icon">📝</span> Prova Única</div>
+      <div class="section-body" id="puBody">
+        <!-- injetado por JS -->
+      </div>
+    </div>
+
     <!-- ── RESUMO + TERMÔMETRO ── -->
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">📊</span> Resumo Geral</div>
       <div class="section-body">
-        <div class="resumo-grid" id="resumoGrid">
-          <!-- cards inseridos por JS -->
-        </div>
+        <div class="resumo-grid" id="resumoGrid"></div>
         <div class="thermo" id="thermoBox">
           <div class="thermo-title" id="thermoTitle"></div>
           <div class="thermo-text"  id="thermoText"></div>
@@ -320,8 +396,41 @@
 
 <script>
 // ── Config ────────────────────────────────────────────────────────
-var SHEET_ID = '1QAuFAH8EgT9_lp-zw5cvSTAoSuHyYht89wuQYFtP978';
+var SHEET_ID  = '1QAuFAH8EgT9_lp-zw5cvSTAoSuHyYht89wuQYFtP978';
 var SERIES_EF = ['8º EF', '9º EF'];
+
+// Meses de redação em ordem; slug = chave na planilha
+var MESES_REDACAO = [
+  {label:'Março',    key:'redacao_marco'},
+  {label:'Abril',    key:'redacao_abril'},
+  {label:'Maio',     key:'redacao_maio'},
+  {label:'Junho',    key:'redacao_junho'},
+  {label:'Agosto',   key:'redacao_agosto'},
+  {label:'Setembro', key:'redacao_setembro'},
+  {label:'Outubro',  key:'redacao_outubro'},
+  {label:'Novembro', key:'redacao_novembro'},
+];
+
+// Marcos do Khan no ano (meta esperada por período)
+var KHAN_MARCOS = [
+  {label:'Mar', pct: 15},
+  {label:'Jun', pct: 35},
+  {label:'Set', pct: 60},
+  {label:'Nov', pct: 80},
+];
+
+// Ações VLF (1-9, exibidas como "Ação N")
+var VLF_KEYS = [
+  {label:'Ação 1', key:'vlf_missao_1'},
+  {label:'Ação 2', key:'vlf_missao_2'},
+  {label:'Ação 3', key:'vlf_missao_3'},
+  {label:'Ação 4', key:'vlf_missao_4'},
+  {label:'Ação 5', key:'vlf_missao_5'},
+  {label:'Ação 6', key:'vlf_missao_6'},
+  {label:'Ação 7', key:'vlf_missao_7'},
+  {label:'Ação 8', key:'vlf_missao_8'},
+  {label:'Ação 9', key:'vlf_missao_9'},
+];
 
 // ── Helpers ───────────────────────────────────────────────────────
 function pctClass(v) {
@@ -334,7 +443,7 @@ function pctClass(v) {
 }
 
 function pctNum(v) {
-  if (!v || v === '—') return null;
+  if (!v || v === '—' || v === '') return null;
   return parseFloat(v);
 }
 
@@ -347,7 +456,7 @@ function parseCSV(text) {
   var lines = text.trim().split('\n');
   var headers = lines[0].split(',').map(function(h){ return h.replace(/"/g,'').trim(); });
   return lines.slice(1).map(function(line) {
-    var vals = line.match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) || [];
+    var vals = line.match(/(".*?"|[^,\n]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) || [];
     var obj = {};
     headers.forEach(function(h, i) {
       obj[h] = (vals[i] || '').replace(/^"|"$/g, '').trim();
@@ -362,50 +471,101 @@ function setDate() {
   document.getElementById('bannerDate').textContent = d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
 }
 
+function makeCard(label, val) {
+  var div = document.createElement('div');
+  div.className = 'month-card';
+  div.innerHTML = '<div class="month-label">' + label + '</div>' +
+                  '<div class="month-val ' + pctClass(val) + '">' + (val || '—') + '</div>';
+  return div;
+}
+
 // ── Renderização ──────────────────────────────────────────────────
 function render(aluno) {
   var isEF = SERIES_EF.indexOf(aluno.serie) > -1;
 
-  document.getElementById('nomeAluno').textContent = aluno.nome.split(' ')[0];
+  // Title case para nomes em maiúscula (respeita preposições pt-BR)
+  var _minusculas = ['de','da','do','das','dos','e','a','o','as','os','em','na','no','nas','nos'];
+  function titleCase(str) {
+    return (str || '').toLowerCase().replace(/\S+/g, function(w, offset) {
+      return (offset > 0 && _minusculas.indexOf(w) > -1)
+        ? w : w.charAt(0).toUpperCase() + w.slice(1);
+    });
+  }
+  document.getElementById('nomeAluno').textContent = titleCase(aluno.nome) || '—';
   document.getElementById('bannerTag').textContent = isEF ? 'Ensino Fundamental' : 'Ensino Médio';
   setDate();
 
-  // ── Khan (EF) ─────────────────────────────────────────────────
+  // ── Khan (EF) ──────────────────────────────────────────────────
   if (isEF) {
     document.getElementById('blocoKhan').style.display = '';
     document.getElementById('kSerie').textContent = aluno.serie;
+
     var kMeta  = aluno.khan_onde_deve_estar || '—';
-    var kAtual = '—'; // khan_progresso ainda não disponível
+    var kAtual = aluno.khan_progresso || '—';
     document.getElementById('kMeta').textContent  = kMeta;
     document.getElementById('kAtual').textContent = kAtual;
 
-    var metaNum = pctNum(kMeta);
-    if (metaNum !== null) {
-      var pct = Math.min(metaNum, 80);
-      document.getElementById('metaMarker').style.left = pct + '%';
-      document.getElementById('markerLabel').style.left = pct + '%';
-      document.getElementById('markerLabel').textContent = '▲ ' + kMeta;
+    // Barra de progresso
+    var metaNum  = pctNum(kMeta);
+    var atualNum = pctNum(kAtual);
+    var progWrap = document.querySelector('.prog-wrap');
+    var progBg   = document.getElementById('kProgBg');
+
+    if (atualNum === null && metaNum === null) {
+      // Sem dados Khan — esconde barra e mostra aviso
+      if (progWrap) progWrap.style.display = 'none';
+      var semDados = document.createElement('div');
+      semDados.style.cssText = 'background:#f5f7fa;border-radius:8px;padding:12px 16px;font-size:13px;color:#888;margin-top:8px;';
+      semDados.textContent = 'Ainda não há dados do Khan Academy para este período.';
+      document.getElementById('blocoKhan').querySelector('.section-body').appendChild(semDados);
+    } else {
+      // Cor da barra: verde se dentro da meta, vermelho se abaixo
+      var barColor = (atualNum !== null && metaNum !== null && atualNum >= metaNum)
+                     ? '#8ec6b2' : '#f2665e';
+      if (atualNum !== null) {
+        var fillPct = Math.min((atualNum / 80) * 100, 100);
+        document.getElementById('barFill').style.width     = fillPct + '%';
+        document.getElementById('barFill').style.background = barColor;
+      }
+      if (metaNum !== null) {
+        var markerPct = Math.min((metaNum / 80) * 100, 100);
+        document.getElementById('metaMarker').style.left    = markerPct + '%';
+        document.getElementById('markerLabel').style.left   = markerPct + '%';
+        document.getElementById('markerLabel').textContent  = '▲ ' + kMeta;
+      }
+
+      // Marcos anuais do Khan
+      KHAN_MARCOS.forEach(function(m) {
+        var dot = document.createElement('div');
+        var pos = Math.min((m.pct / 80) * 100, 100);
+        dot.className = 'milestone-dot' + (atualNum !== null && atualNum >= m.pct ? ' passed' : '');
+        dot.style.left = pos + '%';
+        var lbl = document.createElement('span');
+        lbl.className = 'milestone-lbl';
+        lbl.style.left = pos + '%';
+        lbl.textContent = m.label;
+        progBg.appendChild(dot);
+        progBg.appendChild(lbl);
+      });
     }
 
-    // Pill Khan
-    var kStatus = aluno.khan_status || '';
-    var pill = document.getElementById('kPill');
-    if (kStatus) {
+    // Mensagem orientada
+    var kMsg = aluno.khan_msg || '';
+    if (kMsg) {
+      var pill = document.getElementById('kMsgPill');
       pill.style.display = 'flex';
-      if (kStatus.indexOf('✓') > -1) {
-        pill.className = 'status-pill pill-green';
-        document.getElementById('kPillIcon').textContent = '✅';
-        document.getElementById('kPillMsg').textContent = 'Você está dentro da meta! Continue nesse ritmo.';
-      } else if (kStatus.indexOf('~') > -1) {
-        pill.className = 'status-pill pill-yellow';
-        document.getElementById('kPillIcon').textContent = '⚠️';
-        var semanal = aluno.khan_meta_semanal || '';
-        document.getElementById('kPillMsg').innerHTML = 'Sua meta desta semana é avançar <strong>' + semanal + '</strong> no curso. Você consegue — foque hoje!';
-      } else if (kStatus.indexOf('✗') > -1) {
-        pill.className = 'status-pill pill-red';
-        document.getElementById('kPillIcon').textContent = '🚨';
-        document.getElementById('kPillMsg').textContent = 'Você está fora da meta. Acesse o Khan hoje e retome o conteúdo!';
+      var kIcon = '💡';
+      var pillClass = 'status-pill pill-yellow';
+      if (kMsg.indexOf('Parabéns') > -1 || kMsg.indexOf('atingiu') > -1) {
+        kIcon = '🏆'; pillClass = 'status-pill pill-green';
+      } else if (kMsg.indexOf('dentro da meta') > -1) {
+        kIcon = '✅'; pillClass = 'status-pill pill-green';
+      } else if (kMsg.indexOf('retomar') > -1 || kMsg.indexOf('abaixo') > -1) {
+        kIcon = '🚨'; pillClass = 'status-pill pill-red';
       }
+      pill.className = pillClass;
+      document.getElementById('kPillIcon').textContent = kIcon;
+      document.getElementById('kPillMsg').textContent  = kMsg;
     }
   }
 
@@ -416,67 +576,169 @@ function render(aluno) {
     if (dispensado) {
       document.getElementById('evolDispensado').style.display = '';
     } else {
-      document.getElementById('evolCiclos').style.display = '';
-      var ciclos = [
-        {id:'c1val', val: aluno.evol_ciclo1},
-        {id:'c2val', val: aluno.evol_ciclo2},
-        {id:'c3val', val: aluno.evol_ciclo3},
-      ];
-      var ciclosBaixos = [];
-      ciclos.forEach(function(c, i) {
-        var el = document.getElementById(c.id);
-        el.textContent = c.val || '—';
-        el.className = 'month-val ' + pctClass(c.val);
-        var n = pctNum(c.val);
-        if (n !== null && n < 80) ciclosBaixos.push('Ciclo ' + (i+1));
-      });
-      if (ciclosBaixos.length > 0) {
-        var ep = document.getElementById('evolPill');
-        ep.style.display = 'flex';
-        ep.className = 'status-pill ' + (ciclosBaixos.length >= 2 ? 'pill-red' : 'pill-yellow');
-        document.getElementById('evolPillIcon').textContent = ciclosBaixos.length >= 2 ? '🚨' : '⚠️';
-        document.getElementById('evolPillMsg').textContent =
-          ciclosBaixos.length === 3
-            ? '⚠️ Todos os seus ciclos estão muito abaixo da meta e você pode estar em risco de desligamento.'
-            : 'Você está abaixo da meta no ' + ciclosBaixos.join(' e no ') + '. Retome a plataforma e finalize os módulos incompletos.';
+      document.getElementById('evolAtivo').style.display = '';
+
+      var cicloNome   = aluno.evol_ciclo_atual || '—';
+      var cicloNum    = cicloNome.replace(/[^0-9]/g, '') || '?';
+      var cicloNumInt = parseInt(cicloNum, 10) || 0;
+      var media       = aluno.evol_media_ciclo || '—';
+
+      document.getElementById('evolCicloNum').textContent  = cicloNum;
+      document.getElementById('evolCicloNome').textContent = cicloNome + ' (ciclo atual)';
+      document.getElementById('evolMedia').textContent     = media;
+
+      // Monta grid de todos os ciclos disponíveis
+      var ciclosGrid = document.getElementById('evolCiclosGrid');
+      ciclosGrid.innerHTML = '';
+      var ciclosCount = 0;
+      for (var cn = 1; cn <= 8; cn++) {
+        var val = aluno['evol_media_c' + cn];
+        if (val === undefined || val === null || val === '') continue;
+        ciclosCount++;
+        var card = document.createElement('div');
+        var isAtual = (cn === cicloNumInt);
+        card.className = 'month-card' + (isAtual ? ' ciclo-atual-card' : '');
+        if (isAtual) card.style.cssText = 'border:2px solid #002561;background:#f0f4fa';
+        card.innerHTML = '<div class="month-label">Ciclo ' + cn + (isAtual ? ' ★' : '') + '</div>' +
+                         '<div class="month-val ' + pctClass(val) + '">' + (val || '—') + '</div>';
+        ciclosGrid.appendChild(card);
+      }
+      if (ciclosCount === 0) ciclosGrid.style.display = 'none';
+
+      // Mensagem de módulos incompletos
+      var modMsg = aluno.evol_modulos_msg || '';
+      if (modMsg) {
+        var modPill = document.getElementById('evolModPill');
+        modPill.style.display = 'flex';
+        var modIcon = modMsg.indexOf('completou') > -1 || modMsg.indexOf('🎉') > -1
+                      ? '🎉' : '📋';
+        var modClass = modMsg.indexOf('completou') > -1 || modMsg.indexOf('🎉') > -1
+                       ? 'status-pill pill-green' : 'status-pill pill-yellow';
+        modPill.className = modClass;
+        document.getElementById('evolModIcon').textContent = modIcon;
+        document.getElementById('evolModMsg').textContent  = modMsg;
       }
     }
   }
 
   // ── Redação ───────────────────────────────────────────────────
-  function setCard(id, val) {
-    var el = document.getElementById(id);
-    el.textContent = val || '—';
-    el.className = 'month-val ' + pctClass(val);
-  }
-  setCard('rMar', aluno.redacao_marco);
-  setCard('rAbr', aluno.redacao_abril);
-  setCard('rMai', aluno.redacao_maio);
+  var mesAtual = new Date().getMonth() + 1; // 1-12
+  var MESES_PASSADOS = MESES_REDACAO.filter(function(m) {
+    var ordem = {marco:3, abril:4, maio:5, junho:6, agosto:8, setembro:9, outubro:10, novembro:11};
+    var slug = m.key.replace('redacao_','');
+    return (ordem[slug] || 99) <= mesAtual;
+  });
 
-  // ── VLF ───────────────────────────────────────────────────────
-  setCard('v1', aluno.vlf_acao1);
-  setCard('v2', aluno.vlf_acao2);
-  setCard('v3', aluno.vlf_acao3);
+  var redGrid = document.getElementById('redacaoGrid');
+  redGrid.className = MESES_PASSADOS.length <= 3 ? 'months-grid'
+                    : MESES_PASSADOS.length <= 4 ? 'months-grid-4'
+                    : 'months-grid-5';
+
+  MESES_PASSADOS.forEach(function(m) {
+    var raw = aluno[m.key] || '';
+    // Converte 0/1 ou "0%"/"100%" para exibição percentual consistente
+    var val = raw;
+    if (raw === '1' || raw === 1) val = '100%';
+    else if (raw === '0' || raw === 0) val = '0%';
+    redGrid.appendChild(makeCard(m.label, val));
+  });
+
+  if (!MESES_PASSADOS.length) {
+    redGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma redação aplicada ainda neste ano.</p>';
+  }
+
+  // Mensagem de redação
+  var redMsg = aluno.redacao_msg || '';
+  if (redMsg) {
+    var redPill = document.getElementById('redacaoPill');
+    redPill.style.display = 'flex';
+    var redMissed = parseInt(aluno.redacao_missed || '0', 10);
+    var redIcon, redClass;
+    if (redMissed === 0) {
+      redIcon = '✅'; redClass = 'status-pill pill-green';
+    } else if (redMissed === 1) {
+      redIcon = '⚠️'; redClass = 'status-pill pill-yellow';
+    } else {
+      redIcon = '🚨'; redClass = 'status-pill pill-red';
+    }
+    redPill.className = redClass;
+    document.getElementById('redacaoPillIcon').textContent = redIcon;
+    document.getElementById('redacaoPillMsg').textContent  = redMsg;
+  }
+
+  // ── VLF (Missões) ─────────────────────────────────────────────
+  var vlfGrid = document.getElementById('vlfGrid');
+  var vlfDisponiveis = VLF_KEYS.filter(function(v) {
+    return aluno[v.key] !== undefined && aluno[v.key] !== '';
+  });
+  if (!vlfDisponiveis.length) {
+    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma missão registrada ainda.</p>';
+  } else {
+    vlfGrid.className = vlfDisponiveis.length <= 3 ? 'months-grid'
+                      : vlfDisponiveis.length <= 4 ? 'months-grid-4'
+                      : 'months-grid-5';
+    vlfDisponiveis.forEach(function(v) {
+      vlfGrid.appendChild(makeCard(v.label, aluno[v.key]));
+    });
+  }
 
   // ── Formações ─────────────────────────────────────────────────
-  var pres = aluno.formacao_presenca || '';
+  var pres  = aluno.formacao_presenca || '';
   var badge = document.getElementById('form1Badge');
-  badge.textContent = pres || '—';
-  badge.className = 'fbadge ' + (pres === 'Presente' ? 'fb-green' : (pres.indexOf('Ausente') > -1 ? 'fb-red' : 'fb-yellow'));
+  badge.textContent  = pres || '—';
+  badge.className    = 'fbadge ' + (pres === 'Presente' ? 'fb-green'
+                                  : pres.indexOf('Ausente') > -1 ? 'fb-red' : 'fb-yellow');
+
+  // ── Prova Única ───────────────────────────────────────────────
+  var puBody = document.getElementById('puBody');
+  var puNota = String(aluno.pu_nota || '').trim();
+  if (puNota) {
+    puBody.innerHTML =
+      '<div class="pu-box">' +
+      '  <div class="pu-nota-big">' + puNota + '</div>' +
+      '  <div class="pu-info">' +
+      '    <div class="pu-label">Prova Única 1</div>' +
+      '    <div class="pu-msg">Essa é a sua nota na Prova Única 1.</div>' +
+      '  </div>' +
+      '</div>';
+  } else {
+    puBody.innerHTML =
+      '<div class="pu-pending">' +
+      '  <span class="pu-pending-icon">🕐</span>' +
+      '  <span class="pu-pending-txt">Você ainda não realizou a Prova Única. ' +
+      'Fique atento ao calendário para não perder a data!</span>' +
+      '</div>';
+  }
 
   // ── Resumo ────────────────────────────────────────────────────
+  function statusColor(v) {
+    var cls = pctClass(v);
+    if (cls === 'c-ok')  return '#d4f1e8';
+    if (cls === 'c-mid') return '#fef9e0';
+    if (cls === 'c-bad') return '#fde8e8';
+    return '#f0f2f5';
+  }
+
+  function avgVLF() {
+    var vals = vlfDisponiveis.map(function(v){ return pctNum(aluno[v.key]); })
+                             .filter(function(v){ return v !== null; });
+    if (!vals.length) return '—';
+    return Math.round(vals.reduce(function(s,v){ return s+v; }, 0) / vals.length) + '%';
+  }
+
+  var vlfAvg = avgVLF();
   var resumoCards = isEF
     ? [
-        {label:'Khan',       msg: aluno.khan_status || '—',    bg: statusColor(aluno.khan_status)},
-        {label:'Redação',    msg: aluno.redacao_maio || '—',   bg: statusColor(aluno.redacao_maio)},
-        {label:'Vai Lá e Faz', msg: avgVLF(aluno),             bg: statusColor(avgVLF(aluno))},
-        {label:'Formações',  msg: pres || '—',                 bg: pres === 'Presente' ? '#8ec6b2' : '#f2665e'},
+        {label:'Khan',       msg: aluno.khan_progresso || '—', bg: statusColor(aluno.khan_progresso)},
+        {label:'Redação',    msg: (aluno.redacao_missed || '0') + ' falta(s)', bg: parseInt(aluno.redacao_missed||'0')===0?'#d4f1e8':parseInt(aluno.redacao_missed||'0')===1?'#fef9e0':'#fde8e8'},
+        {label:'Vai Lá e Faz', msg: vlfAvg,                    bg: statusColor(vlfAvg)},
+        {label:'Formações',  msg: pres || '—',                 bg: pres === 'Presente' ? '#d4f1e8' : pres?'#fde8e8':'#f0f2f5'},
       ]
     : [
-        {label:'Evolucional', msg: evolResumo(aluno),          bg: evolColor(aluno)},
-        {label:'Redação',     msg: aluno.redacao_maio || '—',  bg: statusColor(aluno.redacao_maio)},
-        {label:'Vai Lá e Faz',msg: avgVLF(aluno),              bg: statusColor(avgVLF(aluno))},
-        {label:'Formações',   msg: pres || '—',                bg: pres === 'Presente' ? '#8ec6b2' : '#f2665e'},
+        {label:'Evolucional', msg: aluno.evol_media_ciclo || '—', bg: statusColor(aluno.evol_media_ciclo)},
+        {label:'Redação',     msg: (aluno.redacao_missed || '0') + ' falta(s)', bg: parseInt(aluno.redacao_missed||'0')===0?'#d4f1e8':parseInt(aluno.redacao_missed||'0')===1?'#fef9e0':'#fde8e8'},
+        {label:'Vai Lá e Faz',msg: vlfAvg,                        bg: statusColor(vlfAvg)},
+        {label:'Formações',   msg: pres || '—',                   bg: pres === 'Presente' ? '#d4f1e8' : pres?'#fde8e8':'#f0f2f5'},
       ];
 
   var grid = document.getElementById('resumoGrid');
@@ -490,7 +752,7 @@ function render(aluno) {
   });
 
   // ── Termômetro ────────────────────────────────────────────────
-  var tBox = document.getElementById('thermoBox');
+  var tBox   = document.getElementById('thermoBox');
   var titulo = aluno.termometro_titulo || '';
   var texto  = aluno.termometro_texto  || '';
   document.getElementById('thermoTitle').textContent = titulo;
@@ -504,39 +766,7 @@ function render(aluno) {
   document.getElementById('relatorio').style.display    = '';
 }
 
-function avgVLF(a) {
-  var vals = [a.vlf_acao1, a.vlf_acao2, a.vlf_acao3].map(pctNum).filter(function(v){ return v !== null; });
-  if (!vals.length) return '—';
-  return Math.round(vals.reduce(function(s,v){ return s+v; }, 0) / vals.length) + '%';
-}
-
-function statusColor(v) {
-  var cls = pctClass(v);
-  if (cls === 'c-ok')  return '#8ec6b2';
-  if (cls === 'c-mid') return '#ebea70';
-  if (cls === 'c-bad') return '#f2665e';
-  return '#e8eaee';
-}
-
-function evolResumo(a) {
-  if ((a.status_dispensa || '').trim() === 'Dispensado') return 'Dispensado';
-  var ciclos = [a.evol_ciclo1, a.evol_ciclo2, a.evol_ciclo3].map(pctNum).filter(function(v){ return v !== null; });
-  if (!ciclos.length) return '—';
-  var baixos = ciclos.filter(function(v){ return v < 80; }).length;
-  return baixos === 0 ? 'Todos ✓' : baixos + ' ciclo(s) abaixo';
-}
-
-function evolColor(a) {
-  if ((a.status_dispensa || '').trim() === 'Dispensado') return '#d4effc';
-  var ciclos = [a.evol_ciclo1, a.evol_ciclo2, a.evol_ciclo3].map(pctNum).filter(function(v){ return v !== null; });
-  if (!ciclos.length) return '#e8eaee';
-  var baixos = ciclos.filter(function(v){ return v < 80; }).length;
-  if (baixos === 0) return '#8ec6b2';
-  if (baixos === 1) return '#ebea70';
-  return '#f2665e';
-}
-
-// ── Busca RA ──────────────────────────────────────────────────────
+// ── CSV / Busca ───────────────────────────────────────────────────
 function getRA() {
   var params = new URLSearchParams(window.location.search);
   return (params.get('ra') || '').trim();
@@ -557,11 +787,10 @@ function fetchSheet(sheetName) {
     return;
   }
 
-  // Tenta EF primeiro, depois EM
-  fetchSheet('EF').then(function(rows) {
+  fetchSheet('EF_GS').then(function(rows) {
     var aluno = rows.find(function(r){ return r.ra === ra; });
     if (aluno) { render(aluno); return; }
-    return fetchSheet('EM').then(function(rows2) {
+    return fetchSheet('EM_GS').then(function(rows2) {
       var aluno2 = rows2.find(function(r){ return r.ra === ra; });
       if (aluno2) { render(aluno2); return; }
       document.getElementById('stateLoading').style.display = 'none';
