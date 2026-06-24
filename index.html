@@ -350,7 +350,7 @@
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
       <div class="section-body">
-        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de missões entregues em cada semana avaliada.</p>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de ações entregues.</p>
         <div id="vlfGrid" class="months-grid"></div>
       </div>
     </div>
@@ -676,7 +676,7 @@ function render(aluno) {
     return aluno[v.key] !== undefined && aluno[v.key] !== '';
   });
   if (!vlfDisponiveis.length) {
-    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma ação registrada ainda.</p>';
+    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma missão registrada ainda.</p>';
   } else {
     vlfGrid.className = vlfDisponiveis.length <= 3 ? 'months-grid'
                       : vlfDisponiveis.length <= 4 ? 'months-grid-4'
@@ -711,7 +711,7 @@ function render(aluno) {
       '  <div class="pu-nota-big">' + puNota + '</div>' +
       '  <div class="pu-info">' +
       '    <div class="pu-label">Prova Única 1</div>' +
-      '    <div class="pu-msg">Essa é a sua nota na PU 1.</div>' +
+      '    <div class="pu-msg">Essa é a sua nota na Prova Única 1.</div>' +
       '  </div>' +
       '</div>';
   } else {
@@ -757,13 +757,13 @@ function render(aluno) {
   var resumoCards = isEF
     ? [
         {label:'Khan',       msg: aluno.khan_progresso || '—', bg: khanBg()},
-        {label:'Redação',    msg: (function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed) + ' falta(s)', bg: (function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===0?'#d4f1e8':(function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===1?'#fef9e0':'#fde8e8'},
+        {label:'Redação',    msg: (function(v){var s=String(v||'0');var n=s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);var nomes=['Em dia','Uma redação não realizada','Duas redações não realizadas','Três redações não realizadas','Quatro redações não realizadas','Cinco redações não realizadas'];return nomes[n]||n+' redações não realizadas';})(aluno.redacao_missed), bg: (function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===0?'#d4f1e8':(function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===1?'#fef9e0':'#fde8e8'},
         {label:'Vai Lá e Faz', msg: vlfAvg,                    bg: statusColor(vlfAvg)},
         {label:'Formações',  msg: pres || '—',                 bg: pres === 'Presente' ? '#d4f1e8' : pres?'#fde8e8':'#f0f2f5'},
       ]
     : [
         {label:'Evolucional', msg: aluno.evol_media_ciclo || '—', bg: statusColor(aluno.evol_media_ciclo)},
-        {label:'Redação',     msg: (function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed) + ' falta(s)', bg: (function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===0?'#d4f1e8':(function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===1?'#fef9e0':'#fde8e8'},
+        {label:'Redação',     msg: (function(v){var s=String(v||'0');var n=s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);var nomes=['Em dia','Uma redação não realizada','Duas redações não realizadas','Três redações não realizadas','Quatro redações não realizadas','Cinco redações não realizadas'];return nomes[n]||n+' redações não realizadas';})(aluno.redacao_missed), bg: (function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===0?'#d4f1e8':(function(v){var s=String(v||'0');return s.indexOf('%')>-1?Math.round(parseFloat(s)/100):(parseInt(s,10)||0);})(aluno.redacao_missed)===1?'#fef9e0':'#fde8e8'},
         {label:'Vai Lá e Faz',msg: vlfAvg,                        bg: statusColor(vlfAvg)},
         {label:'Formações',   msg: pres || '—',                   bg: pres === 'Presente' ? '#d4f1e8' : pres?'#fde8e8':'#f0f2f5'},
       ];
