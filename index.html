@@ -350,7 +350,7 @@
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
       <div class="section-body">
-        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de ações entregues.</p>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de ações entregues em cada semana avaliada.</p>
         <div id="vlfGrid" class="months-grid"></div>
       </div>
     </div>
@@ -532,7 +532,24 @@ function render(aluno) {
         document.getElementById('barFill').style.background = barColor;
       }
       if (metaNum !== null) {
-        var markerPct = Math.min((metaNum / 80) * 100, 100);
+        // Posiciona o marcador pela DATA ATUAL no calendário (não pelo valor da meta)
+        // A barra cobre Mar(15%) → Nov(80%), representando ~9 meses do ano
+        var hoje = new Date();
+        var mesAtualNum = hoje.getMonth(); // 0=Jan … 11=Dec
+        var diaAtual   = hoje.getDate();
+        // Marcos do calendário: {mes (0-indexed), pct esperado}
+        // Marcos: mês (0=Jan) → progresso esperado acumulado
+        var calMarcos = [{m:0,p:0},{m:2,p:15},{m:5,p:35},{m:8,p:60},{m:10,p:80}];
+        var posCalendario = 80; // default: fim do ano
+        for (var ci = 0; ci < calMarcos.length - 1; ci++) {
+          var cm0 = calMarcos[ci], cm1 = calMarcos[ci+1];
+          if (mesAtualNum >= cm0.m && mesAtualNum < cm1.m) {
+            var fracMes = (mesAtualNum - cm0.m + diaAtual/31) / (cm1.m - cm0.m);
+            posCalendario = cm0.p + fracMes * (cm1.p - cm0.p);
+            break;
+          }
+        }
+        var markerPct = Math.min((posCalendario / 80) * 100, 100);
         document.getElementById('metaMarker').style.left    = markerPct + '%';
         document.getElementById('markerLabel').style.left   = markerPct + '%';
         document.getElementById('markerLabel').textContent  = '▲ ' + kMeta;
@@ -676,7 +693,7 @@ function render(aluno) {
     return aluno[v.key] !== undefined && aluno[v.key] !== '';
   });
   if (!vlfDisponiveis.length) {
-    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma missão registrada ainda.</p>';
+    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma ação registrada ainda.</p>';
   } else {
     vlfGrid.className = vlfDisponiveis.length <= 3 ? 'months-grid'
                       : vlfDisponiveis.length <= 4 ? 'months-grid-4'
@@ -711,7 +728,7 @@ function render(aluno) {
       '  <div class="pu-nota-big">' + puNota + '</div>' +
       '  <div class="pu-info">' +
       '    <div class="pu-label">Prova Única 1</div>' +
-      '    <div class="pu-msg">Essa é a sua nota na PU 1.</div>' +
+      '    <div class="pu-msg">Essa é a sua nota na Prova Única 1.</div>' +
       '  </div>' +
       '</div>';
   } else {
