@@ -274,7 +274,7 @@
           <div class="prog-labels" style="position:relative; margin-top:38px;">
             <span>0%</span>
             <span class="marker-lbl" id="markerLabel" style="left:0%;">▲ meta atual</span>
-            <span>Meta anual: 80%</span>
+            <span>80%</span>
           </div>
         </div>
 
@@ -562,8 +562,10 @@ function render(aluno) {
         var mlEl = document.getElementById('markerLabel');
         mlEl.style.left      = markerPct + '%';
         mlEl.textContent     = '▲ ' + kMeta;
-        // Evita sobreposição com "Meta anual: 80%" quando o marcador está perto do fim
-        mlEl.style.transform = markerPct > 60 ? 'translateX(-90%)' : 'translateX(-50%)';
+        // Evita sobreposição com "80%" quando o marcador está perto do fim
+        mlEl.style.transform = markerPct > 80 ? 'translateX(-100%)'
+                             : markerPct > 55 ? 'translateX(-80%)'
+                             : 'translateX(-50%)';
       }
 
       // Marcos anuais do Khan
