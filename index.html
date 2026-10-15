@@ -559,8 +559,11 @@ function render(aluno) {
         }
         var markerPct = Math.min((posCalendario / 80) * 100, 100);
         document.getElementById('metaMarker').style.left    = markerPct + '%';
-        document.getElementById('markerLabel').style.left   = markerPct + '%';
-        document.getElementById('markerLabel').textContent  = '▲ ' + kMeta;
+        var mlEl = document.getElementById('markerLabel');
+        mlEl.style.left      = markerPct + '%';
+        mlEl.textContent     = '▲ ' + kMeta;
+        // Evita sobreposição com "Meta anual: 80%" quando o marcador está perto do fim
+        mlEl.style.transform = markerPct > 60 ? 'translateX(-90%)' : 'translateX(-50%)';
       }
 
       // Marcos anuais do Khan
