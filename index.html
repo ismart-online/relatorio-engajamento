@@ -350,7 +350,7 @@
     <div class="section">
       <div class="section-hdr"><span class="hdr-icon">🚀</span> Vai Lá e Faz</div>
       <div class="section-body">
-        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de ações entregues em cada semana avaliada.</p>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Percentual de missões entregues em cada semana avaliada.</p>
         <div id="vlfGrid" class="months-grid"></div>
       </div>
     </div>
@@ -366,6 +366,14 @@
         <div class="form-row" id="form2Row" style="display:none">
           <span>2ª Formação</span>
           <span class="fbadge" id="form2Badge">—</span>
+        </div>
+        <div class="form-row" id="form3Row" style="display:none">
+          <span>3ª Formação</span>
+          <span class="fbadge" id="form3Badge">—</span>
+        </div>
+        <div class="form-row" id="form4Row" style="display:none">
+          <span>4ª Formação</span>
+          <span class="fbadge" id="form4Badge">—</span>
         </div>
       </div>
     </div>
@@ -693,7 +701,7 @@ function render(aluno) {
     return aluno[v.key] !== undefined && aluno[v.key] !== '';
   });
   if (!vlfDisponiveis.length) {
-    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma ação registrada ainda.</p>';
+    vlfGrid.innerHTML = '<p style="font-size:13px;color:#888;">Nenhuma missão registrada ainda.</p>';
   } else {
     vlfGrid.className = vlfDisponiveis.length <= 3 ? 'months-grid'
                       : vlfDisponiveis.length <= 4 ? 'months-grid-4'
@@ -716,7 +724,18 @@ function render(aluno) {
     if (row2) row2.style.display = '';
     setBadge(document.getElementById('form2Badge'), f2val);
   }
-
+  var f3val = aluno.formacao_3a || '';
+  if (f3val) {
+    var row3 = document.getElementById('form3Row');
+    if (row3) row3.style.display = '';
+    setBadge(document.getElementById('form3Badge'), f3val);
+  }
+  var f4val = aluno.formacao_4a || '';
+  if (f4val) {
+    var row4 = document.getElementById('form4Row');
+    if (row4) row4.style.display = '';
+    setBadge(document.getElementById('form4Badge'), f4val);
+  }
   // ── Prova Única ───────────────────────────────────────────────
   var puBody = document.getElementById('puBody');
   var puNota = aluno.pu_nota != null && aluno.pu_nota !== ''
@@ -757,7 +776,8 @@ function render(aluno) {
   }
 
   var vlfAvg = avgVLF();
-  var pres = aluno.formacao_1a || '';
+  // Usa a formação mais recente que tiver dado (3ª > 2ª > 1ª)
+  var pres = aluno.formacao_3a || aluno.formacao_2a || aluno.formacao_1a || '';
   // Cor do Khan baseada em progresso vs meta atual (não threshold fixo)
   function khanBg() {
     var prog = pctNum(aluno.khan_progresso);
